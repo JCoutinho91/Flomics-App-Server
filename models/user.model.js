@@ -7,6 +7,11 @@ const userSchema = new Schema({
   name: { type: String, required: true },
   role: { type: String, enum: ["admin", "user"], default: "user" },
   image: { type: String, default: "https://i.imgur.com/yWHfhiG.png" },
+  samples: [{ type: Schema.Types.ObjectId, ref: "UserSubmit" }],
+  city: { type: String },
+  country: { type: String },
 });
 
-module.exports = model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
