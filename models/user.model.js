@@ -7,7 +7,7 @@ const userSchema = new Schema({
   name: { type: String, required: true },
   role: { type: String, enum: ["admin", "user"], default: "user" },
   image: { type: String, default: "https://i.imgur.com/yWHfhiG.png" },
-  samples: [{ type: Schema.Types.ObjectId, ref: "UserSubmit" }],
+  samples: [{ type: Schema.Types.ObjectId, ref: "UserResult" }],
   city: { type: String },
   country: { type: String },
 });

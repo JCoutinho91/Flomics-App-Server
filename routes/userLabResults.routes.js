@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
-
-const userResults = require("./../models/user.results.model");
+const User = require("./../models/user.model");
+const UserResult = require("./../models/user.results.model");
 
 router.post("/api/results/new", async (req, res, next) => {
   try {
@@ -18,9 +18,15 @@ router.post("/api/results/new", async (req, res, next) => {
       Lambda,
       Mu,
       Omicron,
-      file,
+      userIdentify,
     } = req.body;
-    const createdSubmission = await userResults.create({
+
+    if (!mongoose.Types.ObjectId.isValid(userIdentify)) {
+      res.status(400).json({ message: "Invalid object id" });
+      return;
+    }
+
+    const createdSubmission = await UserResult.create({
       sampleId,
       company,
       date,
@@ -32,7 +38,11 @@ router.post("/api/results/new", async (req, res, next) => {
       Lambda,
       Mu,
       Omicron,
-      file,
+      userId: userIdentify,
+    });
+
+    await User.findByIdAndUpdate(userIdentify, {
+      $push: { samples: createdSubmission._id },
     });
     res.status(201).json(createdSubmission);
   } catch (error) {
@@ -42,7 +52,7 @@ router.post("/api/results/new", async (req, res, next) => {
 
 router.get("/api/results", async (req, res, next) => {
   try {
-    const allUserResults = await userResults.find();
+    const allUserResults = await UserResult.find();
     res.status(200).json(allUserResults);
   } catch (error) {
     res.status(500).json(error);
@@ -57,7 +67,7 @@ router.get("/api/results/:resultsId", async (req, res, next) => {
       res.status(400).json({ message: "Invalid object id" });
       return;
     }
-    const oneResult = await userResults.findById(resultsId);
+    const oneResult = await UserResult.findById(resultsId);
 
     res.status(200).json(oneResult);
   } catch (error) {
@@ -88,7 +98,7 @@ router.put("/api/results/:resultsId", async (req, res, next) => {
       Omicron,
     } = req.body;
 
-    const updatedResult = await userResults.findByIdAndUpdate(
+    const updatedResult = await UserResult.findByIdAndUpdate(
       resultsId,
       { sampleId, company, date, Variant, file },
       { new: true }
@@ -108,7 +118,7 @@ router.delete("/api/results/:resultsId", async (req, res, next) => {
       return;
     }
 
-    await userResults.findByIdAndDelete(resultsId);
+    await UserResult.findByIdAndDelete(resultsId);
     res.status(204).send();
   } catch (error) {
     res.status(500).json(error);

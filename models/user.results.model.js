@@ -13,9 +13,9 @@ const userResultsSchema = new Schema({
   Lambda: { type: Number, required: true, default: 0 },
   Mu: { type: Number, required: true, default: 0 },
   Omicron: { type: Number, required: true, default: 0 },
-  file: { data: Buffer, contentType: String },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
-const UserResults = mongoose.model("UserResult", userResultsSchema);
+const UserResult = mongoose.model("UserResult", userResultsSchema);
 
-module.exports = UserResults;
+module.exports = UserResult;
