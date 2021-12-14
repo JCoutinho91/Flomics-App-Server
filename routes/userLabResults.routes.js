@@ -84,23 +84,20 @@ router.put("/api/results/:resultsId", async (req, res, next) => {
       return;
     }
 
-    const {
-      sampleId,
-      company,
-      date,
-      Beta,
-      Gamma,
-      Kappa,
-      Delta,
-      Alpha,
-      Lambda,
-      Mu,
-      Omicron,
-    } = req.body;
+    const { beta, gamma, kappa, delta, alpha, lambda, mu, omicron } = req.body;
 
     const updatedResult = await UserResult.findByIdAndUpdate(
       resultsId,
-      { sampleId, company, date, Variant, file },
+      {
+        Beta: beta,
+        Gamma: gamma,
+        Kappa: kappa,
+        Delta: delta,
+        Alpha: alpha,
+        Lambda: lambda,
+        Mu: mu,
+        Omicron: omicron,
+      },
       { new: true }
     );
 

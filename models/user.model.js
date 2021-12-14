@@ -8,6 +8,7 @@ const userSchema = new Schema({
   role: { type: String, enum: ["admin", "user"], default: "user" },
   image: { type: String, default: "https://i.imgur.com/yWHfhiG.png" },
   samples: [{ type: Schema.Types.ObjectId, ref: "UserResult" }],
+  requests: [{ type: Schema.Types.ObjectId, ref: "Request" }],
   city: { type: String },
   country: { type: String },
 });

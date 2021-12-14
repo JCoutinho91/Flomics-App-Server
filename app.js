@@ -30,6 +30,9 @@ app.use("/", variantRoutes);
 const labResults = require("./routes/userLabResults.routes");
 app.use("/", labResults);
 
+const requestRoutes = require("./routes/request.routes");
+app.use("/", requestRoutes);
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
