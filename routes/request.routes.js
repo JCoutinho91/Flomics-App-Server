@@ -3,8 +3,9 @@ const express = require("express");
 const router = express.Router();
 const Request = require("./../models/requests.model");
 const User = require("./../models/user.model");
+const { isAuthenticated, isAdmin } = require("./../middleware/jwt.middleware");
 
-router.post("/api/request/new", async (req, res, next) => {
+router.post("/api/request/new", isAuthenticated, async (req, res, next) => {
   try {
     const { name, size, status, variants, userIdentify, observations } =
       req.body;
