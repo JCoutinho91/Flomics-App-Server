@@ -80,7 +80,7 @@ router.put("/api/requests/:requestId", async (req, res, next) => {
   }
 });
 
-router.delete("/api/results/:requestId", async (req, res, next) => {
+router.delete("/api/requests/:requestId", async (req, res, next) => {
   try {
     const { requestId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(requestId)) {

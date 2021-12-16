@@ -110,10 +110,6 @@ router.put("/api/results/:resultsId", async (req, res, next) => {
 router.delete("/api/results/:resultsId", async (req, res, next) => {
   try {
     const { resultsId } = req.params;
-    if (!mongoose.Types.ObjectId.isValid(resultsId)) {
-      res.status(400).json({ message: "Invalid object id" });
-      return;
-    }
 
     await UserResult.findByIdAndDelete(resultsId);
     res.status(204).send();
