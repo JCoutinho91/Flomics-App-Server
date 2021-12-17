@@ -9,7 +9,7 @@ const requestSchema = new Schema({
     enum: ["Delivered", "Pending", "Active"],
     default: "Pending",
   },
-  variants: { type: String, default: "Pending", required: true },
+  variants: { type: String },
   userId: { type: Schema.Types.ObjectId, ref: "User" },
   observations: { type: String, default: "None" },
 });
